@@ -18,14 +18,21 @@ public class button : MonoBehaviour
         SceneManager.LoadScene("frist_page");
     }
 
+    // 도움말 버튼을 눌렀을 때 호출할 함수
     public void OpenHelp()
     {
-        
-        helpPanel.SetActive(true);
+        if (helpPanel != null)
+        {
+            helpPanel.SetActive(true); // 패널을 화면에 보이게 합니다.
+        }
     }
 
+    // 도움말 창 닫기 버튼을 눌렀을 때 호출할 함수
     public void CloseHelp()
     {
-        helpPanel.SetActive(false);
+        if (helpPanel != null)
+        {
+            helpPanel.SetActive(false); // 패널을 화면에서 숨깁니다.
+        }
     }
 }
