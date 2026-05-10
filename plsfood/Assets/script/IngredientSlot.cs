@@ -8,6 +8,7 @@ public class IngredientSlot : MonoBehaviour, IDropHandler
         // 드래그 중인 오브젝트를 가져옴
         GameObject dropped = eventData.pointerDrag;
         DraggableIngredient draggable = dropped.GetComponent<DraggableIngredient>();
+        
 
         if (draggable != null && transform.childCount == 0)
         {

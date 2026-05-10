@@ -50,5 +50,6 @@ public class DraggableIngredient : MonoBehaviour, IBeginDragHandler, IDragHandle
         canvasGroup.alpha = 1.0f; // 불투명하게 돌리기
         // [Visual]: 크기를 원래대로 돌림
         transform.localScale = originalScale;
+        Object.FindAnyObjectByType<SynthesisManager>()?.CheckRecipe();
     }
 }

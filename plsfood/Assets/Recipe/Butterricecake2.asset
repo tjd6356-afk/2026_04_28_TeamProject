@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a6bb87ccab03545b927738f288a434, type: 3}
+  m_Name: Butterricecake2
+  m_EditorClassIdentifier: 
+  recipeName: Butterricecake
+  ingredients:
+  - Item_Suger
+  - Item_Butter2
+  - Item_Butter2
+  - Item_Egg
+  resultPrefab: {fileID: 2527554320917432283, guid: 508a0e4f184962b4284d57b72a873830, type: 3}
