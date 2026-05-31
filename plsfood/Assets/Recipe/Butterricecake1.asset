@@ -18,4 +18,4 @@ MonoBehaviour:
   - Item_Butter1
   - Item_Butter1
   - Item_Egg
-  resultPrefab: {fileID: 2527554320917432283, guid: df573b201aa93814cb286f50f322e189, type: 3}
+  resultPrefab: {fileID: 2527554320917432283, guid: 6752e0ab6ff103746af36051ed5e64f0, type: 3}

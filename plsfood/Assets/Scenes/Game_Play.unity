@@ -1642,6 +1642,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: customerData
+      value: 
+      objectReference: {fileID: 11400000, guid: fd64eb56e018f5f488512aa289297246, type: 2}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: dialogueText
+      value: 
+      objectReference: {fileID: 708259335}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: recipeBook.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: 'recipeBook.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f003f9793919eaa49bc0c056435d9757, type: 2}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: 'recipeBook.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d65270e43418d8488ec2a6f53f2dcc3, type: 2}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: 'recipeBook.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 735807d7ba97ccb49bb9da72400959bb, type: 2}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: 'recipeBook.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c161388bc9ab6014295a484e79c92ef4, type: 2}
+    - target: {fileID: 1986182416775260346, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
+      propertyPath: 'recipeBook.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: cb6de43cfc72c724393f60a0bf86d89f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
