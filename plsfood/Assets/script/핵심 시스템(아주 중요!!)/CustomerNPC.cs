@@ -87,7 +87,7 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
                 if (foodName == desiredFoodName)
                 {
                     if (dialogueText != null) 
-                        dialogueText.text = "😋 와! 정말 맛있네요! 감사합니다!";
+                        dialogueText.text = " 와! 정말 맛있네요! 감사합니다!";
                     
                     Destroy(droppedObject); // 음식 삭제
                     
@@ -97,7 +97,7 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
                 else
                 {
                     if (dialogueText != null)
-                        dialogueText.text = $"🤢 음? 이건 제가 주문한 {desiredFoodName}이 아니에요.";
+                        dialogueText.text = $" 음? 이건 제가 주문한 {desiredFoodName}이 아니에요.";
                 }
             }
         }

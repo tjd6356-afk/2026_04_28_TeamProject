@@ -35,4 +35,12 @@ public class button : MonoBehaviour
             helpPanel.SetActive(false); // 패널을 화면에서 숨깁니다.
         }
     }
+    public void GameQuitButtonAction()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else        
+        Application.Quit();
+#endif
+    }
 }
