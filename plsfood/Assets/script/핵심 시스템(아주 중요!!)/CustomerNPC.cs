@@ -1,105 +1,154 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-using TMPro; // UI 텍스트 출력을 위해 필요합니다!
+using System.Collections;
+using TMPro;
 
 public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     [Header("손님 데이터 및 레시피")]
-    public CustomerData customerData;    // 위에서 만든 손님 에셋을 넣는 곳
-    public List<Recipe> recipeBook;      // 전체 레시피 리스트를 여기에 넣어줍니다
-    
-    [Header("UI 연결")]
-    public TextMeshProUGUI dialogueText; // 대사를 띄워줄 UI 텍스트 상자
+    public CustomerData customerData;
+    private List<Recipe> recipeBook;
+    private TextMeshProUGUI dialogueText;
 
-    private string desiredFoodName;      // 손님이 원하는 음식 프리팹 이름
-    private string currentDialogue;      // 현재 손님이 할 대사
+    [Header("연출 설정")]
+    public float moveSpeed = 5f;          // 스르륵 움직이는 속도
+    private Vector2 targetPosition;       // 도착해서 주문받을 목적지 좌표
+    private Vector2 startBottomPosition;  // 화면 아래쪽 대기 좌표
 
-    void Start()
+    private string desiredFoodName;
+    private string currentDialogue;
+    private bool isMoving = false;        // 현재 이동 중인지 체크
+    private bool isServed = false;        // 이미 음식을 받았는지 체크
+    private RectTransform rectTransform;
+
+    void Awake()
     {
-        GenerateRandomOrder();
+        rectTransform = GetComponent<RectTransform>();
     }
 
-    // 🌟 레시피 중 하나를 랜덤하게 골라 주문 대사를 만듭니다.
+    // Spawner가 손님을 생성한 직후 초기 세팅을 해줄 함수
+    public void SetupCustomer(Vector2 targetPos, List<Recipe> recipes, TextMeshProUGUI textUI)
+    {
+        targetPosition = targetPos;
+        recipeBook = recipes;
+        dialogueText = textUI;
+
+        // 시작 위치는 목적지에서 아래로 600픽셀 내려간 곳 (카메라 밖)
+        startBottomPosition = targetPosition + new Vector2(0, -600f);
+        rectTransform.anchoredPosition = startBottomPosition;
+
+        // 1. 위로 올라오는 연출 시작
+        StartCoroutine(MoveToPosition(targetPosition, () => {
+            // 도착하면 주문 생성
+            GenerateRandomOrder();
+            ShowDialogue();
+        }));
+    }
+
     void GenerateRandomOrder()
     {
-        if (recipeBook == null || recipeBook.Count == 0)
-        {
-            Debug.LogError("레시피 북이 비어있습니다! 레시피를 등록해주세요.");
-            return;
-        }
+        if (recipeBook == null || recipeBook.Count == 0) return;
 
-        // 1. 레시피 북에서 무작위로 하나 선택
         int randomIndex = Random.Range(0, recipeBook.Count);
         Recipe chosenRecipe = recipeBook[randomIndex];
 
-        // 2. 손님이 원하는 음식 이름 기억하기 (프리팹 이름 기준)
         if (chosenRecipe.resultPrefab != null)
         {
             desiredFoodName = chosenRecipe.resultPrefab.name;
         }
 
-        // 3. ScriptableObject에서 랜덤 인사말 가져오기
         string greeting = "안녕하세요!";
         if (customerData != null && customerData.greetings.Count > 0)
         {
-            int dialogIndex = Random.Range(0, customerData.greetings.Count);
-            greeting = customerData.greetings[dialogIndex];
+            greeting = customerData.greetings[Random.Range(0, customerData.greetings.Count)];
         }
 
-        // 4. 인사말과 주문 대사 합치기
         currentDialogue = $"{greeting}\n<b>[{chosenRecipe.recipeName}]</b> 하나 주세요!";
-        
-        // 처음에 바로 대사를 보여주고 싶다면 아래 주석을 해제하세요.
-        // ShowDialogue();
     }
 
-    // 대사창에 글자 띄우기
     void ShowDialogue()
     {
-        if (dialogueText != null)
-        {
-            dialogueText.text = currentDialogue;
-        }
+        if (dialogueText != null) dialogueText.text = currentDialogue;
     }
 
-    // 🌟 손님(이미지)을 클릭했을 때 실행되는 함수
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log($"{customerData?.customerName} 클릭됨!");
-        ShowDialogue();
+        if (!isMoving && !isServed) ShowDialogue();
     }
 
-    // 음식을 받아먹는 로직 (기존 기능 유지)
+    // 🌟 음식을 받았을 때 처리하는 핵심 로직
     public void OnDrop(PointerEventData eventData)
     {
+        if (isServed || isMoving) return;
+
         GameObject droppedObject = eventData.pointerDrag;
+        if (droppedObject == null) return;
 
-        if (droppedObject != null)
+        DraggableFood food = droppedObject.GetComponent<DraggableFood>();
+        if (food != null)
         {
-            DraggableFood food = droppedObject.GetComponent<DraggableFood>();
+            string foodName = droppedObject.name.Replace("(Clone)", "").Trim();
 
-            if (food != null)
+            // 1. 맞는 음식일 때
+            if (foodName == desiredFoodName)
             {
-                string foodName = droppedObject.name.Replace("(Clone)", "").Trim();
+                isServed = true;
+                if (dialogueText != null) dialogueText.text = "😋 와! 정말 맛있네요! 감사합니다!";
 
-                // 주문한 음식과 일치할 때
-                if (foodName == desiredFoodName)
-                {
-                    if (dialogueText != null) 
-                        dialogueText.text = " 와! 맛이 정말 좋네요! 감사합니다!";
-                    
-                    Destroy(droppedObject); // 음식 삭제
-                    
-                    // 성공 후 다음 손님 주문을 받고 싶다면 아래 주석 해제 (1초 뒤 새로운 주문)
-                    // Invoke("GenerateRandomOrder", 1.5f);
-                }
-                else
-                {
-                    if (dialogueText != null)
-                        dialogueText.text = $" 음? 이건 제가 주문한 {desiredFoodName}이 아닌데요?";
-                }
+                // 점수 상승! (예: +100점)
+                ScoreManager.Instance.AddScore(100);
+
+                Destroy(droppedObject); // 음식 삭제
+                LeaveStation();         // 퇴장 연출 시작
+            }
+            // 2. 틀린 음식일 때
+            else
+            {
+                if (dialogueText != null) dialogueText.text = $"🤢 앗, 이건 제가 주문한 {desiredFoodName}이 아니에요!";
+
+                // 점수 감점! (예: -50점)
+                ScoreManager.Instance.AddScore(-50);
+
+                // 틀렸을 때는 음식을 파괴하지 않고 원래 자리(Result Area)로 돌려보냅니다.
             }
         }
+    }
+
+    // 아래로 내려가면서 퇴장하는 함수
+    void LeaveStation()
+    {
+        isMoving = true;
+        // 1.5초 동안 감사 대사를 보여준 뒤 아래로 내려갑니다.
+        StartCoroutine(WaitAndLeave());
+    }
+
+    System.Collections.IEnumerator WaitAndLeave()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        // 대사창 비우기
+        if (dialogueText != null) dialogueText.text = "";
+
+        // 아래쪽 화면 밖으로 내려가는 연출
+        StartCoroutine(MoveToPosition(startBottomPosition, () => {
+            // 완전히 내려가면 오브젝트 삭제 후 다음 손님 소환 요청
+            CustomerSpawner.Instance.OnCustomerLeft();
+            Destroy(gameObject);
+        }));
+    }
+
+    // UI 오브젝트를 목적지까지 부드럽게 이동시키는 연출 (Lerp)
+    System.Collections.IEnumerator MoveToPosition(Vector2 target, System.Action onComplete)
+    {
+        isMoving = true;
+        while (Vector2.Distance(rectTransform.anchoredPosition, target) > 0.5f)
+        {
+            rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, target, Time.deltaTime * moveSpeed);
+            yield return null;
+        }
+        rectTransform.anchoredPosition = target;
+        isMoving = false;
+        onComplete?.Invoke();
     }
 }
