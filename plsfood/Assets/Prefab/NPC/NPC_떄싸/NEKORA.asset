@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3426856a9217ab24ab2d89b59c0749ad, type: 3}
-  m_Name: NEKOMI
+  m_Name: NEKORA
   m_EditorClassIdentifier: 
-  customerName: NekoMi
+  customerName: NEKORA
   greetings:
-  - "\uC74C. . ."
-  - "\uC5B4. . ."
-  - "\uC544. . ."
+  - 
+  - 
+  - 
