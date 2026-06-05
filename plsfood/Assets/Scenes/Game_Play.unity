@@ -477,6 +477,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 472509996}
+  - {fileID: 1089672763}
   - {fileID: 2145868330}
   - {fileID: 8311904}
   - {fileID: 302883308}
@@ -1775,6 +1776,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997477106}
   m_CullTransparentMesh: 1
+--- !u!1 &1089672762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1089672763}
+  m_Layer: 5
+  m_Name: CustomerParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1089672763
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089672762}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 322272039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1114857880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,7 +1844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 477, y: -3409}
+  m_AnchoredPosition: {x: 477, y: -1600}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1114857882
@@ -1827,7 +1863,7 @@ MonoBehaviour:
   - {fileID: 584210148475573487, guid: b3808ad65f8517848b737127fd00d3a8, type: 3}
   - {fileID: 1825157791998362, guid: 41b78f5290763c04d97d1094a9602b64, type: 3}
   - {fileID: 9148309651402198840, guid: 0f3c597cb75f1b945af05298450b8c29, type: 3}
-  canvasTransform: {fileID: 322272039}
+  customerParent: {fileID: 1089672763}
   recipeBook:
   - {fileID: 11400000, guid: f003f9793919eaa49bc0c056435d9757, type: 2}
   - {fileID: 11400000, guid: 9d65270e43418d8488ec2a6f53f2dcc3, type: 2}

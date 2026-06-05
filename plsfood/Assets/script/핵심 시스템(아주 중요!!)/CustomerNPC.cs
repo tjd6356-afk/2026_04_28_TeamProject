@@ -13,13 +13,16 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     [Header("연출 설정")]
     public float moveSpeed = 5f;          // 스르륵 움직이는 속도
+
+    public float offScreenY = -1600f;
+
     private Vector2 targetPosition;       // 도착해서 주문받을 목적지 좌표
     private Vector2 startBottomPosition;  // 화면 아래쪽 대기 좌표
 
     private string desiredFoodName;
     private string currentDialogue;
-    private bool isMoving = false;        // 현재 이동 중인지 체크
-    private bool isServed = false;        // 이미 음식을 받았는지 체크
+    private bool isMoving = false;
+    private bool isServed = false;
     private RectTransform rectTransform;
 
     void Awake()
@@ -27,20 +30,18 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
         rectTransform = GetComponent<RectTransform>();
     }
 
-    // Spawner가 손님을 생성한 직후 초기 세팅을 해줄 함수
     public void SetupCustomer(Vector2 targetPos, List<Recipe> recipes, TextMeshProUGUI textUI)
     {
         targetPosition = targetPos;
         recipeBook = recipes;
         dialogueText = textUI;
 
-        // 시작 위치는 목적지에서 아래로 600픽셀 내려간 곳 (카메라 밖)
-        startBottomPosition = targetPosition + new Vector2(0, -600f);
+        // [수정] 목적지에서 빼는 방식이 아니라, 화면 아래쪽 외부(offScreenY)에서 시작하도록 설정
+        startBottomPosition = new Vector2(targetPosition.x, offScreenY);
         rectTransform.anchoredPosition = startBottomPosition;
 
-        // 1. 위로 올라오는 연출 시작
+        // 위로 올라오는 연출 시작
         StartCoroutine(MoveToPosition(targetPosition, () => {
-            // 도착하면 주문 생성
             GenerateRandomOrder();
             ShowDialogue();
         }));
@@ -77,7 +78,6 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
         if (!isMoving && !isServed) ShowDialogue();
     }
 
-    // 🌟 음식을 받았을 때 처리하는 핵심 로직
     public void OnDrop(PointerEventData eventData)
     {
         if (isServed || isMoving) return;
@@ -90,56 +90,44 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
         {
             string foodName = droppedObject.name.Replace("(Clone)", "").Trim();
 
-            // 1. 맞는 음식일 때
             if (foodName == desiredFoodName)
             {
                 isServed = true;
-                if (dialogueText != null) dialogueText.text = "😋 와! 정말 맛있네요! 감사합니다!";
+                if (dialogueText != null) dialogueText.text = " 와! 정말 맛있네요! 감사합니다!";
 
-                // 점수 상승! (예: +100점)
                 ScoreManager.Instance.AddScore(100);
 
-                Destroy(droppedObject); // 음식 삭제
-                LeaveStation();         // 퇴장 연출 시작
+                Destroy(droppedObject);
+                LeaveStation();
             }
-            // 2. 틀린 음식일 때
             else
             {
-                if (dialogueText != null) dialogueText.text = $"🤢 앗, 이건 제가 주문한 {desiredFoodName}이 아니에요!";
-
-                // 점수 감점! (예: -50점)
+                if (dialogueText != null) dialogueText.text = $" 앗, 이건 제가 주문한 {desiredFoodName}이 아니에요!";
                 ScoreManager.Instance.AddScore(-50);
-
-                // 틀렸을 때는 음식을 파괴하지 않고 원래 자리(Result Area)로 돌려보냅니다.
             }
         }
     }
 
-    // 아래로 내려가면서 퇴장하는 함수
     void LeaveStation()
     {
         isMoving = true;
-        // 1.5초 동안 감사 대사를 보여준 뒤 아래로 내려갑니다.
         StartCoroutine(WaitAndLeave());
     }
 
-    System.Collections.IEnumerator WaitAndLeave()
+    IEnumerator WaitAndLeave()
     {
         yield return new WaitForSeconds(1.5f);
 
-        // 대사창 비우기
         if (dialogueText != null) dialogueText.text = "";
 
-        // 아래쪽 화면 밖으로 내려가는 연출
+        // 완전히 화면 밖 좌표(startBottomPosition)로 내려갑니다.
         StartCoroutine(MoveToPosition(startBottomPosition, () => {
-            // 완전히 내려가면 오브젝트 삭제 후 다음 손님 소환 요청
             CustomerSpawner.Instance.OnCustomerLeft();
             Destroy(gameObject);
         }));
     }
 
-    // UI 오브젝트를 목적지까지 부드럽게 이동시키는 연출 (Lerp)
-    System.Collections.IEnumerator MoveToPosition(Vector2 target, System.Action onComplete)
+    IEnumerator MoveToPosition(Vector2 target, System.Action onComplete)
     {
         isMoving = true;
         while (Vector2.Distance(rectTransform.anchoredPosition, target) > 0.5f)
