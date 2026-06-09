@@ -2029,7 +2029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerGauge: {fileID: 40144792}
   timerText: {fileID: 0}
-  totalTime: 60
+  totalTime: 12
 --- !u!114 &1658332893
 MonoBehaviour:
   m_ObjectHideFlags: 0
