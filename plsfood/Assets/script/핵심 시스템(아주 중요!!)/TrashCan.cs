@@ -5,6 +5,7 @@ public class TrashCan : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
         // 1. 드래그해서 놓은 물체(아이템)를 가져옵니다.
         GameObject droppedObject = eventData.pointerDrag;
 

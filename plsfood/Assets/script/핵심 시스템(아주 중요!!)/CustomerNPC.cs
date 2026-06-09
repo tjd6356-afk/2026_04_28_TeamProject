@@ -82,6 +82,8 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
+
         if (isServed || isMoving) return;
 
         GameObject droppedObject = eventData.pointerDrag;
@@ -109,7 +111,7 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
             }
         }
 
-        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
+        
     }
 
     void LeaveStation()

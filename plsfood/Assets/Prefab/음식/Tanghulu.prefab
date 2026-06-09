@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2948160739236754662}
   - component: {fileID: 3520008724920637253}
   - component: {fileID: 6139883698845742444}
+  - component: {fileID: 3910087778916212328}
+  - component: {fileID: -6146920056105884963}
   m_Layer: 5
   m_Name: Tanghulu
   m_TagString: Untagged
@@ -36,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2948160739236754662
 CanvasRenderer:
@@ -88,3 +90,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4caa4f07da6bd641a9532d527070dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &3910087778916212328
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297143743589015302}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &-6146920056105884963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297143743589015302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a9db9e32522204382345a4e05be073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentToReturnTo: {fileID: 0}

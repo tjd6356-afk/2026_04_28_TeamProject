@@ -14,8 +14,10 @@ public class ItemSpawner : MonoBehaviour
 
     void Start()
     {
-        // 게임이 시작되자마자 실행!
-        SpawnRandomItems();
+        if (spawnOnStart)
+        {
+            SpawnRandomItems();
+        }
     }
 
     public void SpawnRandomItems()
@@ -50,6 +52,8 @@ public class ItemSpawner : MonoBehaviour
     {
         //
         // 1. 재료 프리팹이 등록되어 있는지 확인
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
+
         if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
         {
             Debug.LogError("재료 프리팹 배열이 비어있습니다. 프리팹을 등록해주세요.");

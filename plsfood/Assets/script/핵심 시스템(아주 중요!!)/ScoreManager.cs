@@ -40,4 +40,10 @@ public class ScoreManager : MonoBehaviour
             scoreText.text = $"Score: {currentScore}";
         }
     }
+
+    public int GetCurrentScore()
+    {
+        return currentScore;
+    }
+
 }

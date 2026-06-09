@@ -12,7 +12,7 @@ public class IngredientSlot : MonoBehaviour, IDropHandler
 
         if (draggable != null && transform.childCount == 0)
         {
-            // 🌟 아이템이 돌아갈 부모를 이 슬롯으로 바꿔치기함!
+            // 아이템이 돌아갈 부모를 이 슬롯으로 바꿔치기함!
             draggable.parentToReturnTo = transform;
         }
     }
