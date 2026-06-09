@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3426856a9217ab24ab2d89b59c0749ad, type: 3}
+  m_Name: NEKORA
+  m_EditorClassIdentifier: 
+  customerName: NEKORA
+  greetings:
+  - "\uC544. \uC774\uB7F4\uB54C\uB294 \uC874\uB313\uB9D0\uC744 \uD574\uC57C\uC9C0.
+    . ."
+  - "\uC5B4\uC774 \uADF8\uAC70 \uC880 \uC918\uBD10. . . \uC544 \uB9DE\uB2E4 \uC874\uB313\uB9D0"
+  - "\uC57C \uC774\uAC70\uC918. . . \uC544. . . \uC54C\uACA0\uC5B4\uC694. . ."
