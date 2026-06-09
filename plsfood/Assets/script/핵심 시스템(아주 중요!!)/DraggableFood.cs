@@ -23,6 +23,8 @@ public class DraggableFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // 드래그하는 동안 다른 UI에 가려지지 않도록 맨 앞으로 빼줍니다.
         transform.SetParent(transform.root); 
         canvasGroup.blocksRaycasts = false; // 마우스가 음식을 통과해 NPC에게 닿도록 설정
+
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -42,4 +44,6 @@ public class DraggableFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             transform.localPosition = Vector3.zero;
         }
     }
+
+
 }

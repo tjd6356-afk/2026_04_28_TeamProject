@@ -32,6 +32,8 @@ public class DraggableIngredient : MonoBehaviour, IBeginDragHandler, IDragHandle
         canvasGroup.alpha = 0.6f; // 살짝 투명하게 만들어서 "들고 있다"는 느낌을 줌
         // [Visual]: 크기를 키워 "들어 올린 느낌" 연출
         transform.localScale = dragScale;
+
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
     }
 
     public void OnDrag(PointerEventData eventData) => transform.position = Input.mousePosition;

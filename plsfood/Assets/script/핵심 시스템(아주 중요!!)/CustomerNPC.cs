@@ -76,6 +76,8 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!isMoving && !isServed) ShowDialogue();
+
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -106,6 +108,8 @@ public class CustomerNPC : MonoBehaviour, IDropHandler, IPointerClickHandler
                 ScoreManager.Instance.AddScore(-50);
             }
         }
+
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
     }
 
     void LeaveStation()
