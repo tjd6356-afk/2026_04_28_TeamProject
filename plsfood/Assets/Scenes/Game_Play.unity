@@ -2284,7 +2284,7 @@ MonoBehaviour:
   timerText: {fileID: 0}
   gameOverPanel: {fileID: 1018581085}
   finalScoreText: {fileID: 1744438078}
-  totalTime: 180
+  totalTime: 30
 --- !u!114 &1658332893
 MonoBehaviour:
   m_ObjectHideFlags: 0
