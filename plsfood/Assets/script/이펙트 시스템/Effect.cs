@@ -3,69 +3,66 @@ using UnityEngine;
 public class Effect : MonoBehaviour
 {
     [Header("수명")]
-    [SerializeField] private float lifetime = 1.0f;
+    [SerializeField] private float lifeTime = 0.25f;
 
-    [Header("이동 거리")]
-    [SerializeField] private float minDistance = 0.5f;
-    [SerializeField] private float maxDistance = 3.0f;
+    [Header("범위")]
+    [SerializeField] private float maxDistance = 0.75f;
 
     private Vector3 startPos;
     private Vector3 targetPos;
 
-    private float timer;
+    private Vector3 startScale;
 
     private SpriteRenderer spriteRenderer;
 
-    private Vector3 startScale;
+    private float timer;
 
     public void Initialize(Vector2 direction)
     {
         startPos = transform.position;
 
-        float distance = Random.Range(minDistance, maxDistance);
+        // 대부분 가까운 거리에서 끝남
+        float distance = Mathf.Pow(Random.value, 2f) * maxDistance;
 
-        targetPos = startPos + (Vector3)(direction.normalized * distance);
+        targetPos = startPos + (Vector3)(direction * distance);
     }
 
-    void Start()
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        startScale = transform.localScale;
+        float randomSize = Random.Range(0.8f, 1.2f);
 
-        float randomSize = Random.Range(0.5f, 1.5f);
         transform.localScale *= randomSize;
+
         startScale = transform.localScale;
     }
 
-    void Update()
+    private void Update()
     {
         timer += Time.deltaTime;
 
-        float t = timer / lifetime;
+        float t = timer / lifeTime;
 
-        // 이동
-        float curve = 1f - Mathf.Pow(1f - t, 2f);
+        // 빠르게 퍼지고 감속
+        float moveCurve = 1f - Mathf.Pow(1f - t, 3f);
 
         transform.position =
-            Vector3.Lerp(startPos, targetPos, curve);
+            Vector3.Lerp(startPos, targetPos, moveCurve);
 
         // 크기 감소
-        transform.localScale = Vector3.Lerp(
-            startScale,
-            Vector3.zero,
-            t
-        );
+        transform.localScale =
+            Vector3.Lerp(startScale, Vector3.zero, t);
 
         // 투명도 감소
         if (spriteRenderer != null)
         {
             Color c = spriteRenderer.color;
-            c.a = Mathf.Lerp(1f, 0f, t);
+            c.a = 1f - t;
             spriteRenderer.color = c;
         }
 
-        if (timer >= lifetime)
+        if (timer >= lifeTime)
         {
             Destroy(gameObject);
         }
