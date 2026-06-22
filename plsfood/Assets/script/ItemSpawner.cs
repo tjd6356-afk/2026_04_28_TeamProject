@@ -96,4 +96,65 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
+    public void FillAllSlots()
+    {
+        // 게임 종료 상태라면 실행되지 않도록 방어
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
+
+        if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
+        {
+            Debug.LogError("재료 프리팹 배열이 비어있습니다.");
+            return;
+        }
+
+        // 현재 인벤토리에 있는 아이템 수 확인
+        int currentItemCount = inventoryGrid.childCount;
+
+        // 꽉 채우기 위해 필요한 개수 계산 (최대 개수 - 현재 개수)
+        int needToSpawn = maxSlots - currentItemCount;
+
+        if (needToSpawn <= 0)
+        {
+            Debug.LogWarning("인벤토리가 이미 가득 차 있습니다!");
+            return;
+        }
+
+        // 부족한 개수만큼만 반복해서 생성
+        for (int i = 0; i < needToSpawn; i++)
+        {
+            int randomIndex = Random.Range(0, ingredientPrefabs.Length);
+            GameObject newItemPrefab = ingredientPrefabs[randomIndex];
+
+            GameObject newItem = Instantiate(newItemPrefab, inventoryGrid);
+
+            // 드래그 컴포넌트의 고향 주소 세팅
+            DraggableIngredient draggableScript = newItem.GetComponent<DraggableIngredient>();
+            if (draggableScript != null)
+            {
+                draggableScript.parentToReturnTo = inventoryGrid;
+            }
+
+            // 크기 및 이름 초기화
+            newItem.transform.localScale = Vector3.one;
+            newItem.name = newItemPrefab.name;
+        }
+
+        Debug.Log($"인벤토리에 {needToSpawn}개의 재료를 추가하여 가득 채웠습니다!");
+    }
+
+    //  [새로운 기능 2] AllTrash_Button용: 인벤토리의 모든 재료를 삭제하는 함수
+    public void ClearAllSlots()
+    {
+        // 게임 종료 상태라면 실행되지 않도록 방어
+        if (TimerManager.Instance != null && TimerManager.Instance.IsGameOver) return;
+
+        // 그리드(인벤토리) 내부의 모든 자식 오브젝트를 하나씩 순회하며 삭제
+        foreach (Transform child in inventoryGrid)
+        {
+            Destroy(child.gameObject);
+        }
+
+        Debug.Log("인벤토리의 모든 재료를 청소했습니다!");
+    }
+
 }
