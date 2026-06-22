@@ -8,7 +8,7 @@ public class DraggableIngredient : MonoBehaviour, IBeginDragHandler, IDragHandle
     [HideInInspector] public Transform parentToReturnTo = null; // 돌아갈 부모를 저장하는 변수
 
     // [Lifting Effect]: 들어 올렸을 때 살짝 커지게 함
-    private Vector3 dragScale = new Vector3(1.2f, 1.2f, 1.0f);
+    private Vector3 dragScale = new Vector3(1.5f, 1.5f, 1.0f);
     private Vector3 originalScale;
 
     private void Awake()
