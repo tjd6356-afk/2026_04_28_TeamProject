@@ -721,9 +721,9 @@ RectTransform:
   - {fileID: 1678474085}
   - {fileID: 2106500239}
   - {fileID: 65112335}
-  - {fileID: 435528835}
   - {fileID: 1372168958}
   - {fileID: 142562988}
+  - {fileID: 435528835}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2517,6 +2517,7 @@ GameObject:
   - component: {fileID: 1647789421}
   - component: {fileID: 1647789423}
   - component: {fileID: 1647789424}
+  - component: {fileID: 1647789425}
   m_Layer: 0
   m_Name: TirleManager
   m_TagString: Untagged
@@ -2581,6 +2582,23 @@ MonoBehaviour:
   sfxSource: {fileID: 902361296}
   bgmClip: {fileID: 8300000, guid: f8acb31eb9c9c04409ce60a39ba062f6, type: 3}
   clickSfxClip: {fileID: 8300000, guid: e363acf7323729d4791461de4dd81714, type: 3}
+--- !u!114 &1647789425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647789420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b62ec58378a78445a7492793ea78486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerGauge: {fileID: 0}
+  timerText: {fileID: 0}
+  gameOverPanel: {fileID: 0}
+  finalScoreText: {fileID: 0}
+  totalTime: 60
 --- !u!1 &1678474084
 GameObject:
   m_ObjectHideFlags: 0
@@ -3241,6 +3259,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6328172138362674295, guid: 94c0666061788504bac77edade1db070, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1647789421}
+    - target: {fileID: 8073032964359031992, guid: 94c0666061788504bac77edade1db070, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1647789425}
+    - target: {fileID: 8939541194301694741, guid: 94c0666061788504bac77edade1db070, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1647789421}
     - target: {fileID: 9074535498929642943, guid: 94c0666061788504bac77edade1db070, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
